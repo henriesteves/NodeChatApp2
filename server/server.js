@@ -24,11 +24,13 @@ io.on('connection', (socket) => {
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'))
 
-  socket.on('createMessage', (message) => {
+  socket.on('createMessage', (message, callback) => {
     console.log('createMessage', message)
 
     // emits to all users connected
     io.emit('newMessage', generateMessage(message.from, message.text))
+
+    callback('This is from the server')
 
     // emits to all users except the sender
     // socket.broadcast.emit('newMessage', {
